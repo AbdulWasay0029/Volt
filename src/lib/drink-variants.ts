@@ -33,7 +33,7 @@ export const drinkVariants: DrinkVariant[] = [
     subtitle: 'Energy Drink',
     description:
       'A futuristic neon-charged energy drink with an electric aftertaste.',
-    themeColor: '#C7FF4D', // Neon Lime
+    themeColor: '#9D00FF', // Neon Purple
     webpSequencePath:
       'https://mvseqjzqphbvjsajlaat.supabase.co/storage/v1/object/public/volt-neon/frame_0001.webp',
     frameCount: 192,
