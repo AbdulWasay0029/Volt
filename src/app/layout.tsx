@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     description: 'Ignite your senses with VOLT. Engineered for instant focus and raw power.',
     images: ['/og-image.jpg'],
   },
+  icons: {
+    icon: '/logo.svg',
+  },
   robots: {
     index: true,
     follow: true,
