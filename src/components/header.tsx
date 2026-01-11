@@ -52,8 +52,11 @@ export function Header() {
       style={{ scrollPaddingTop: '80px' }}
     >
       <nav className="container mx-auto flex h-20 items-center justify-between px-4">
-        <Link href="/" aria-label="VOLT homepage">
-          <Icons.logo className="h-7 w-auto text-primary transition-colors hover:text-primary/80" />
+        <Link href="/" aria-label="VOLT homepage" className="flex items-center gap-2 group">
+          <Icons.logo className="h-8 w-auto text-primary transition-transform group-hover:scale-110" />
+          <span className="font-headline text-2xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
+            VOLT
+          </span>
         </Link>
         <div className="hidden items-center space-x-6 md:flex">
           {sections.map((section) => (

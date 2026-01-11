@@ -21,7 +21,7 @@ export function ParallaxBackground({
   onLoaded,
 }: ParallaxBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const frameIndexRef = useRef(0);
   const [isReady, setIsReady] = useState(false);
 
@@ -34,49 +34,32 @@ export function ParallaxBackground({
     return [...urlParts, newFileName].join('/');
   };
 
-  // Preload images
-  useEffect(() => {
-    setIsReady(false);
-    onProgress(0);
-    const { webpSequencePath, frameCount } = variant;
-
-    let loadedCount = 0;
-    const imagePromises: Promise<HTMLImageElement>[] = [];
-    const newImages: HTMLImageElement[] = [];
-
-    const framesToLoad = Math.ceil(frameCount / 2);
-
-    for (let i = 0; i < frameCount; i += 2) {
-      const img = new Image();
-      img.src = getFrameUrl(webpSequencePath, i, frameCount);
-      newImages.push(img);
-
-      const promise = new Promise<HTMLImageElement>((resolve, reject) => {
-        img.onload = () => {
-          loadedCount++;
-          onProgress((loadedCount / framesToLoad) * 100);
-          resolve(img);
-        };
-        img.onerror = reject;
-      });
-      imagePromises.push(promise);
-    }
-
-    Promise.all(imagePromises).then((loadedImages) => {
-      imagesRef.current = loadedImages;
-      setIsReady(true);
-      onLoaded();
-    });
-  }, [variant, onProgress, onLoaded]);
-
   const drawImage = useCallback(() => {
-    if (!isReady || !canvasRef.current) return;
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const img = imagesRef.current[frameIndexRef.current];
 
-    if (ctx && img) {
-      // Scale image to cover canvas while maintaining aspect ratio
+    if (!ctx) return;
+
+    // Progressive Render Logic:
+    let img = imagesRef.current[frameIndexRef.current];
+
+    // Fallback: search backwards for any loaded image
+    if (!img) {
+      let searchIndex = frameIndexRef.current - 1;
+      while (searchIndex >= 0) {
+        if (imagesRef.current[searchIndex]) {
+          img = imagesRef.current[searchIndex];
+          break;
+        }
+        searchIndex--;
+      }
+    }
+
+    // Clear canvas before drawing (or if we have no image)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (img) {
       const canvasAspect = canvas.width / canvas.height;
       const imageAspect = img.naturalWidth / img.naturalHeight;
       let sx = 0, sy = 0, sWidth = img.naturalWidth, sHeight = img.naturalHeight;
@@ -88,20 +71,71 @@ export function ParallaxBackground({
         sWidth = img.naturalHeight * canvasAspect;
         sx = (img.naturalWidth - sWidth) / 2;
       }
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
     }
-  }, [isReady]);
+  }, []);
 
-  // Initial draw
+  // Preload images aggressively but non-blocking
   useEffect(() => {
-    if (isReady) {
-      drawImage();
-    }
-  }, [isReady, drawImage]);
+    setIsReady(false);
+    onProgress(0);
 
-  // Handle scroll
+    // Clear canvas immediately when switching variants
+    if (canvasRef.current) {
+      const ctx = canvasRef.current.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    }
+
+    const { webpSequencePath, frameCount } = variant;
+    const totalFramesToLoad = Math.ceil(frameCount / 2);
+
+    imagesRef.current = new Array(totalFramesToLoad).fill(null);
+
+    let loadedCount = 0;
+    let hasTriggeredLoad = false;
+    const loadThreshold = Math.max(5, Math.floor(totalFramesToLoad * 0.15));
+
+    const checkReady = () => {
+      // We need at least the first frame to render anything
+      if (!imagesRef.current[0]) return;
+
+      if (!hasTriggeredLoad && loadedCount >= loadThreshold) {
+        hasTriggeredLoad = true;
+        setIsReady(true);
+        onLoaded();
+      }
+    };
+
+    for (let i = 0; i < frameCount; i += 2) {
+      const arrayIndex = i / 2;
+      const img = new Image();
+      img.src = getFrameUrl(webpSequencePath, i, frameCount);
+
+      img.onload = () => {
+        imagesRef.current[arrayIndex] = img;
+        loadedCount++;
+        onProgress((loadedCount / totalFramesToLoad) * 100);
+        checkReady();
+
+        // If this image corresponds to the current frame (or close fallback), force a redraw immediately
+        if (arrayIndex <= frameIndexRef.current && (frameIndexRef.current - arrayIndex) < 5) {
+          requestAnimationFrame(drawImage);
+        }
+      };
+
+      img.onerror = () => {
+        console.error(`Failed to load frame ${i}`);
+        loadedCount++;
+        onProgress((loadedCount / totalFramesToLoad) * 100);
+        checkReady();
+      };
+    }
+
+    return () => { };
+  }, [variant, onProgress, onLoaded, drawImage]);
+
+  // Handle scroll & sync frame index
   useEffect(() => {
     const handleScroll = () => {
       const scrollFraction = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
@@ -110,13 +144,17 @@ export function ParallaxBackground({
         imageCount - 1,
         Math.max(0, Math.floor(scrollFraction * imageCount))
       );
+
       if (newFrameIndex !== frameIndexRef.current) {
         frameIndexRef.current = newFrameIndex;
         requestAnimationFrame(drawImage);
       }
     };
 
+    // Calculate initial frame based on current scroll position immediately when ready
     if (isReady) {
+      handleScroll();
+      drawImage(); // Ensure one initial draw happens 
       window.addEventListener('scroll', handleScroll, { passive: true });
     }
     return () => window.removeEventListener('scroll', handleScroll);

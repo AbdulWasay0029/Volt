@@ -8,8 +8,11 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="flex flex-col items-center md:items-start">
-            <Link href="/" className="mb-4">
-              <Icons.logo className="h-8 w-auto text-primary" />
+            <Link href="/" className="mb-4 flex items-center gap-2 group">
+              <Icons.logo className="h-8 w-auto text-primary transition-transform group-hover:scale-110" />
+              <span className="font-headline text-2xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors">
+                VOLT
+              </span>
             </Link>
             <p className="text-center text-sm md:text-left">
               Engineered for speed, focus, and raw electrical power.
