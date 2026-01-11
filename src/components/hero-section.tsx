@@ -74,12 +74,14 @@ export function HeroSection({
                 variant="outline"
                 size="lg"
                 className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                onClick={() => window.open('https://www.linkedin.com/in/abdulwasay0029/', '_blank')}
               >
                 BUY NOW
               </Button>
               <Button
                 size="lg"
                 className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => onSwitchVariant('next')}
               >
                 EXPLORE FLAVORS
               </Button>
@@ -124,38 +126,38 @@ export function HeroSection({
       {/* Bottom Center Social Icons & Mobile Nav */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <div className="flex items-center gap-12">
-            <button
-                onClick={() => onSwitchVariant('prev')}
-                className="group flex items-center gap-2 font-headline text-sm uppercase tracking-widest text-foreground/60 transition-colors hover:text-primary md:hidden"
-                disabled={isSwitching}
-            >
-                <ChevronUp className="h-5 w-5 transition-transform group-hover:-translate-y-1" />
-                Prev
-            </button>
+          <button
+            onClick={() => onSwitchVariant('prev')}
+            className="group flex items-center gap-2 font-headline text-sm uppercase tracking-widest text-foreground/60 transition-colors hover:text-primary md:hidden"
+            disabled={isSwitching}
+          >
+            <ChevronUp className="h-5 w-5 transition-transform group-hover:-translate-y-1" />
+            Prev
+          </button>
 
-            <div className="hidden md:flex">
-                <SocialIcons />
-            </div>
+          <div className="hidden md:flex">
+            <SocialIcons />
+          </div>
 
-            <button
-                onClick={() => onSwitchVariant('next')}
-                className="group flex items-center gap-2 font-headline text-sm uppercase tracking-widest text-foreground/60 transition-colors hover:text-primary md:hidden"
-                disabled={isSwitching}
-            >
-                Next
-                <ChevronDown className="h-5 w-5 transition-transform group-hover:translate-y-1" />
-            </button>
+          <button
+            onClick={() => onSwitchVariant('next')}
+            className="group flex items-center gap-2 font-headline text-sm uppercase tracking-widest text-foreground/60 transition-colors hover:text-primary md:hidden"
+            disabled={isSwitching}
+          >
+            Next
+            <ChevronDown className="h-5 w-5 transition-transform group-hover:translate-y-1" />
+          </button>
         </div>
         <div className="mt-4 flex justify-center md:hidden">
-            <span
-                className="font-headline text-5xl font-bold text-foreground/10"
-                style={{ color: variant.themeColor }}
-            >
-                {formattedIndex}
-            </span>
+          <span
+            className="font-headline text-5xl font-bold text-foreground/10"
+            style={{ color: variant.themeColor }}
+          >
+            {formattedIndex}
+          </span>
         </div>
-         <div className="mt-4 flex md:hidden justify-center">
-            <SocialIcons />
+        <div className="mt-4 flex md:hidden justify-center">
+          <SocialIcons />
         </div>
       </div>
     </section>
