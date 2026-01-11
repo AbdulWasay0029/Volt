@@ -2,15 +2,15 @@
   "placeholderImages": [
     {
       "id": "about-image",
-      "description": "A dynamic shot of someone being active, representing energy.",
-      "imageUrl": "https://images.unsplash.com/photo-1634788699029-b26c89ed32b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhY3Rpb24lMjBmaXRuZXNzfGVufDB8fHx8MTc2ODA1OTIwMHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "action fitness"
+      "description": "A focused athlete tying their running shoes on a paved path in a city park at sunrise.",
+      "imageUrl": "/about-vibe.png",
+      "imageHint": "athlete sunrise park"
     },
     {
       "id": "ingredients-image",
-      "description": "Close-up of natural ingredients like fruits or plants.",
-      "imageUrl": "https://images.unsplash.com/photo-1611774257550-d8389aca161c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxmcnVpdCUyMGluZ3JlZGllbnRzfGVufDB8fHx8MTc2ODA1OTIwMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "fruit ingredients"
+      "description": "Fresh lemon and ginger",
+      "imageUrl": "/ingredients-lemon-ginger.png",
+      "imageHint": "lemon and ginger simple"
     },
     {
       "id": "review-avatar-1",

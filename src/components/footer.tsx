@@ -30,7 +30,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="hover:text-primary">
+                <Link href="https://www.linkedin.com/in/abdulwasay0029/" className="hover:text-primary" target="_blank" rel="noopener noreferrer">
                   Contact
                 </Link>
               </li>

@@ -11,7 +11,7 @@ const sections = [
   { id: 'nutrition', name: 'Nutrition' },
   { id: 'reviews', name: 'Reviews' },
   { id: 'faq', name: 'FAQ' },
-  { id: 'contact', name: 'Contact' },
+  { id: 'contact', name: 'Contact', href: 'https://www.linkedin.com/in/abdulwasay0029/' },
 ];
 
 export function Header() {
@@ -24,6 +24,9 @@ export function Header() {
 
       let currentSection = '';
       sections.forEach((section) => {
+        // Skip external links for scroll spy
+        if (section.href) return;
+
         const element = document.getElementById(section.id);
         if (element) {
           const rect = element.getBoundingClientRect();
@@ -62,7 +65,9 @@ export function Header() {
           {sections.map((section) => (
             <Link
               key={section.id}
-              href={`#${section.id}`}
+              href={section.href || `#${section.id}`}
+              target={section.href ? '_blank' : undefined}
+              rel={section.href ? 'noopener noreferrer' : undefined}
               className={cn(
                 'font-headline text-sm font-medium uppercase tracking-wider text-foreground/80 transition-colors hover:text-primary',
                 activeSection === section.id && 'text-primary'
