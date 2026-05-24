@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/volt_neon.gif" alt="Volt Parallax Motion" width="100%" />
+  <img src="public/banner.png" alt="Volt Energy Parallax Banner" width="100%" />
 
   <h1>⚡ VOLT — Cinematic Parallax Energy Drink Website</h1>
   
