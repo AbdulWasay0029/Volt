@@ -1,64 +1,83 @@
-# ⚡ VOLT — Cinematic Parallax Energy Drink Website
+<div align="center">
+  <img src="public/volt_neon.gif" alt="Volt Parallax Motion" width="100%" />
 
-A high-performance, scroll-driven parallax website built to showcase a fictional energy drink brand (**VOLT**) using cinematic WebP frame sequences, smooth variant switching, and modern frontend tooling.
+  <h1>⚡ VOLT — Cinematic Parallax Energy Drink Website</h1>
+  
+  <p>
+    <strong>A high-performance, scroll-driven parallax website built to showcase a fictional energy drink brand using cinematic WebP frame sequences, smooth variant switching, and modern frontend tooling.</strong>
+  </p>
+  
+  <p>
+    <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+    <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+    <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  </p>
+</div>
 
-This project explores how **image-sequence–driven motion**, **scroll-mapped animation**, and **AI-assisted asset generation** can be combined into a production-ready marketing site.
-
----
+<hr />
 
 ## ✨ Features
 
-* **Scroll-Controlled Cinematic Hero**
+- **Scroll-Controlled Cinematic Hero**
+  - Full-screen parallax background driven by WebP frame sequences.
+  - Scroll down → animation advances.
+  - Scroll up → animation reverses.
+  - Smooth, non-time-based motion tied directly to physical scroll position.
 
-  * Full-screen parallax background driven by WebP frame sequences
-  * Scroll down → animation advances
-  * Scroll up → animation reverses
-  * Smooth, non-time-based motion (tied directly to scroll position)
+- **High-Performance Asset Delivery**
+  - WebP frame sequences hosted externally on Supabase Storage (CDN-backed).
+  - Lazy loading + progressive preloading to avoid blocking renders.
 
-* **Multiple Drink Variants**
+- **Premium UI / UX**
+  - Dark cinematic aesthetic built to frame high-fidelity imagery.
+  - Minimal UI to keep focus purely on motion and product.
+  - Smooth fade transitions between variants.
 
-  * VOLT Blue
-  * VOLT Red
-  * VOLT Neon
-  * Seamless PREV / NEXT switching
-  * Dynamic theme color updates per variant
+---
 
-* **High-Performance Asset Delivery**
+## 🥤 Multiple Drink Variants
 
-  * WebP frame sequences hosted on Supabase Storage (CDN-backed)
-  * Lazy loading + progressive preloading to avoid blocking renders
+VOLT dynamically shifts its entire theme and parallax sequence based on the active flavor variant.
 
-* **Premium UI / UX**
-
-  * Dark cinematic aesthetic
-  * Clean typography and spacing
-  * Minimal UI to keep focus on motion
-  * Smooth fade transitions between variants
-
-* **Production-Ready Stack**
-
-  * TypeScript
-  * Next.js (App Router)
-  * Tailwind CSS
-  * Deployed on Vercel
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <h3>VOLT Blue</h3>
+        <img src="public/volt_blue.png" alt="VOLT Blue Static" width="300" /><br/>
+        <img src="public/volt_blue.gif" alt="VOLT Blue Parallax" width="300" />
+      </td>
+      <td align="center">
+        <h3>VOLT Neon</h3>
+        <img src="public/volt_neon.png" alt="VOLT Neon Static" width="300" /><br/>
+        <img src="public/volt_neon.gif" alt="VOLT Neon Parallax" width="300" />
+      </td>
+      <td align="center">
+        <h3>VOLT Red</h3>
+        <img src="public/volt_red.png" alt="VOLT Red Static" width="300" /><br/>
+        <img src="public/volt_red.gif" alt="VOLT Red Parallax" width="300" />
+      </td>
+    </tr>
+  </table>
+</div>
 
 ---
 
 ## 🧠 Technical Architecture
 
 ### Scroll → Frame Mapping
-
-Instead of autoplaying video, the hero animation maps **scroll position → frame index**, giving precise control over motion and performance.
+Instead of autoplaying a massive video file, the hero animation maps **scroll position → frame index**, giving absolute tactile control over the motion while saving massive amounts of memory and bandwidth.
 
 ```text
 scrollProgress → normalized value → frameIndex → WebP frame
 ```
 
-This approach:
-
-* Feels more tactile than video
-* Avoids heavy video decoding
-* Gives full control over animation timing
+**Why this approach?**
+- Feels physically tactile and responsive (unlike a video player).
+- Bypasses heavy video decoding overhead on mobile devices.
+- Gives full programmatic control over animation timing and snapping.
 
 ---
 
@@ -92,15 +111,6 @@ src/
 
 ---
 
-## 🎞️ Assets & Hosting
-
-* **Frame sequences** are hosted externally on **Supabase Storage**
-* Only the **first frame URL** is referenced in code
-* Remaining frames are inferred programmatically
-* This keeps the repo lightweight and deploy-friendly
-
----
-
 ## 🚀 Local Development
 
 ```bash
@@ -111,7 +121,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`
+Open `http://localhost:3000` to view the application.
 
 ---
 
@@ -119,35 +129,13 @@ Open `http://localhost:3000`
 
 Deployed using **Vercel** with automatic CI/CD from GitHub.
 
-Steps:
-
-1. Push repo to GitHub
-2. Import project in Vercel
-3. Add environment variables from `.env`
-4. Deploy
-
----
-
-## 🧪 Notes on Performance
-
-* Large image sequences are **expected** to load progressively
-* Initial frames are prioritized to avoid blank states
-* Additional optimizations (frame thinning, predictive loading) can be added if needed
+1. Push the repository to GitHub.
+2. Import the project in Vercel.
+3. Add environment variables from `.env`.
+4. Deploy.
 
 ---
 
 ## 📌 Purpose of This Project
 
-This project was built to:
-
-* Experiment with scroll-driven animation systems
-* Explore cinematic product presentation on the web
-* Demonstrate a real-world frontend architecture combining design, performance, and motion
-
-It is **not** a template dump — it is a system.
-
----
-
-## 📄 License
-
-This project is for educational and demonstration purposes.
+This project explores how **image-sequence–driven motion**, **scroll-mapped animation**, and high-quality asset design can be combined into a production-ready marketing site. It is not a template dump — it is an engineered motion system.
